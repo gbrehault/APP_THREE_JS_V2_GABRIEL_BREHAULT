@@ -6,6 +6,8 @@ import {
 
 import { GLTF, GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import SkullGLb from '~~/assets/models/skull.glb'
+import EnveMap from '~~/assets/textures/brown_photostudio_02_4k.hdr'
+import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';;
 import * as THREE from 'three';
 
 import type {
@@ -24,7 +26,7 @@ export class SkullScene extends Scene implements Lifecycle {
   public clock: Clock
   public camera: PerspectiveCamera
   public viewport: Viewport
-  public pointLight: PointLight
+  public pointLight1: PointLight
   // public light2: PointLight
   // public light3: PointLight
 
@@ -42,22 +44,29 @@ export class SkullScene extends Scene implements Lifecycle {
     const axesHelper = new THREE.AxesHelper(5);
     this.add(axesHelper);
 
-    this.pointLight = new THREE.PointLight(0xff0000, 10000, 100);
-    this.pointLight.position.set(10, 10, 10);
-    this.add(this.pointLight);
+    this.pointLight1 = new THREE.PointLight(0xffffff, 10000, 100);
+    this.pointLight1.position.set(10, 10, 10);
+    this.add(this.pointLight1);
 
     // Ajout du PointLightHelper
-    const pointLightHelper = new THREE.PointLightHelper(this.pointLight, 1);
+    const pointLightHelper = new THREE.PointLightHelper(this.pointLight1, 1);
     this.add(pointLightHelper);
 
   }
 
   public async load(): Promise<void> {
+    const hdrLoader = new RGBELoader();
+    hdrLoader.load(EnveMap, (texture) => {
+      texture.mapping = THREE.EquirectangularReflectionMapping;
+      this.environment = texture; // Pour les réflexions
+      this.background = texture;
+    });
     const gltf = await new Promise<GLTF>((resolve, reject) => {
       new GLTFLoader().load(SkullGLb, resolve, undefined, reject)
     });
     gltf.scene.scale.setScalar(0.3);
     this.add(gltf.scene)
+    console.log(gltf)
   }
 
   public update(): void {
