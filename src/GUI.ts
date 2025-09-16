@@ -33,17 +33,20 @@ export class GUI extends Pane implements Lifecycle {
 
     const lifecycleMethods = ['start', 'stop', 'dispose'] as const
 
-    ;(<EssentialsPlugin.ButtonGridApi>this.addBlade({
-      view: 'buttongrid',
-      size: [lifecycleMethods.length, 1],
-      cells: (x: number) => ({ title: lifecycleMethods[x] }),
-      label: ''
-    })).on('click', (event: any) => {
-      this.app[lifecycleMethods[event.index[0]]]()
-      this.toggleFpsGraph(this.app.loop.running)
-    })
+      ; (<EssentialsPlugin.ButtonGridApi>this.addBlade({
+        view: 'buttongrid',
+        size: [lifecycleMethods.length, 1],
+        cells: (x: number) => ({ title: lifecycleMethods[x] }),
+        label: ''
+      })).on('click', (event: any) => {
+        this.app[lifecycleMethods[event.index[0]]]()
+        this.toggleFpsGraph(this.app.loop.running)
+      })
 
     this.applyStyle()
+
+    this.addBinding(app.scene.mesh!.material, 'roughness')
+    this.addBinding(app.scene.mesh!.material, 'metalness')
   }
 
   public start(): void {

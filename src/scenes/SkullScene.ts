@@ -1,19 +1,20 @@
 import {
   Scene,
   PointLight,
-  PerspectiveCamera
+  PerspectiveCamera,
+  Mesh
 } from 'three'
 
 import { GLTF, GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import SkullGLb from '~~/assets/models/skull.glb'
-import EnveMap from '~~/assets/textures/brown_photostudio_02_4k.hdr'
+import EnveMap from '~~/assets/textures/envmap_skull_gardient.hdr'
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';;
 import * as THREE from 'three';
 
 import type {
   Viewport,
   Clock,
-  Lifecycle
+  Lifecycle,
 } from '~/core'
 
 export interface MainSceneParamaters {
@@ -27,9 +28,8 @@ export class SkullScene extends Scene implements Lifecycle {
   public camera: PerspectiveCamera
   public viewport: Viewport
   public pointLight1: PointLight
-  // public light2: PointLight
-  // public light3: PointLight
-
+  public skullMesh: THREE.Mesh | null = null
+  public mesh?: Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>
   public constructor({
     clock,
     camera,
@@ -51,7 +51,6 @@ export class SkullScene extends Scene implements Lifecycle {
     // Ajout du PointLightHelper
     const pointLightHelper = new THREE.PointLightHelper(this.pointLight1, 1);
     this.add(pointLightHelper);
-
   }
 
   public async load(): Promise<void> {
@@ -59,14 +58,17 @@ export class SkullScene extends Scene implements Lifecycle {
     hdrLoader.load(EnveMap, (texture) => {
       texture.mapping = THREE.EquirectangularReflectionMapping;
       this.environment = texture; // Pour les réflexions
-      this.background = texture;
     });
     const gltf = await new Promise<GLTF>((resolve, reject) => {
       new GLTFLoader().load(SkullGLb, resolve, undefined, reject)
     });
+    this.mesh = gltf.scene.children[0] as Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>
+
     gltf.scene.scale.setScalar(0.3);
-    this.add(gltf.scene)
-    console.log(gltf)
+    this.add(gltf.scene);
+    this.mesh.material.roughness = 0;
+
+    console.log(gltf);
   }
 
   public update(): void {
