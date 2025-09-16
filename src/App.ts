@@ -3,7 +3,7 @@ import { Clock, Loop, Viewport, type Lifecycle } from '~/core'
 import type { GUI } from '~/GUI'
 import { Composer } from '~/Composer'
 import { Controls } from '~/Controls'
-import { SkullScene } from '~/scenes/skullScene'
+import { SkullScene } from '~/scenes/SkullScene'
 
 export interface AppParameters {
   canvas?: HTMLCanvasElement | OffscreenCanvas
@@ -28,7 +28,7 @@ export class App implements Lifecycle {
   }: AppParameters = {}) {
     this.debug = debug
     this.clock = new Clock()
-    this.camera = new PerspectiveCamera(30, 1, 0.1, 50)
+    this.camera = new PerspectiveCamera(60, 1, 0.1, 100)
 
     this.renderer = new WebGLRenderer({
       canvas,
