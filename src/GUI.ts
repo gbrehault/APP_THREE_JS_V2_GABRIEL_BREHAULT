@@ -4,6 +4,7 @@ import type { Lifecycle } from '~/core'
 import type { App } from '~/App'
 
 export class GUI extends Pane implements Lifecycle {
+
   public app: App
   public fpsGraph: EssentialsPlugin.FpsGraphBladeApi
 
@@ -90,4 +91,5 @@ export class GUI extends Pane implements Lifecycle {
       stopwatch.fps_ = 0
     }
   }
+
 }

@@ -64,9 +64,14 @@ export class SkullScene extends Scene implements Lifecycle {
     });
     this.mesh = gltf.scene.children[0] as Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>
 
-    gltf.scene.scale.setScalar(0.3);
-    this.add(gltf.scene);
+    this.mesh.scale.setScalar(1);
+    this.mesh.position.setScalar(0);
+    this.mesh.rotation.set(0, 1, 0.4, 'XYZ');
+    this.mesh.updateMatrixWorld(true);
+    this.mesh.matrix.copy(this.matrixWorld);
+    this.add(this.mesh);
     this.mesh.material.roughness = 0;
+    this.mesh.material.metalness = 0;
 
     console.log(gltf);
   }
