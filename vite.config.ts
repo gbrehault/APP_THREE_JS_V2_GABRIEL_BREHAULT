@@ -23,7 +23,7 @@ export default defineConfig({
           dest: 'libs'
         },
         {
-          src: 'node_modules/three/s/jsm/libs/basis',
+          src: 'node_modules/three/examples/jsm/libs/basis',
           dest: 'libs'
         }
       ]
