@@ -44,7 +44,7 @@ export class SkullScene extends Scene implements Lifecycle {
     const axesHelper = new THREE.AxesHelper(5);
     this.add(axesHelper);
 
-    this.pointLight1 = new THREE.PointLight(0xffffff, 10000, 100);
+    this.pointLight1 = new THREE.PointLight(0xffffff, 10000, 10);
     this.pointLight1.position.set(10, 10, 10);
     this.add(this.pointLight1);
 
@@ -77,6 +77,7 @@ export class SkullScene extends Scene implements Lifecycle {
   }
 
   public update(): void {
+
   }
 
   public resize(): void {

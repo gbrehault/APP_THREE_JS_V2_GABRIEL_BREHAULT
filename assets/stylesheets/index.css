@@ -17,5 +17,10 @@ canvas {
   top: 0;
   left: 0;
   object-fit: cover;
-  position: absolute;
+  /* position: fixed; */
+
+}
+#a, #b {
+  height: 100vh; /* Chaque section occupe la hauteur de la fenêtre */
+  width: 100%; /* Occupe toute la largeur */
 }

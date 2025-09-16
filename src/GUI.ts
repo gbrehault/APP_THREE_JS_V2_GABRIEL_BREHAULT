@@ -14,10 +14,11 @@ export class GUI extends Pane implements Lifecycle {
 
   public constructor(app: App) {
     super({
-      container: document.createElement('div')
+      container: document.createElement('div'),
     })
 
-    this.registerPlugin(EssentialsPlugin)
+    this.hidden = true, // Permet dfe maquer le GUI par défaut
+      this.registerPlugin(EssentialsPlugin)
     this.app = app
 
     this.fpsGraph = <EssentialsPlugin.FpsGraphBladeApi>this.addBlade({

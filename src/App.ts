@@ -29,6 +29,7 @@ export class App implements Lifecycle {
     this.debug = debug
     this.clock = new Clock()
     this.camera = new PerspectiveCamera(60, 1, 0.1, 100)
+    this.camera.position.set(0.3, 10.7, -22.6)
 
     this.renderer = new WebGLRenderer({
       canvas,
@@ -98,7 +99,7 @@ export class App implements Lifecycle {
    * Stop the app rendering loop
    */
   public stop(): void {
-    this.controls.stop()
+    // this.controls.stop()
     this.viewport.stop()
     this.loop.stop()
   }
