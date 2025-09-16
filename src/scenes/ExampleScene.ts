@@ -1,10 +1,10 @@
 import {
   Scene,
   Mesh,
+  TorusKnotGeometry,
   MeshStandardMaterial,
   PointLight,
-  PerspectiveCamera,
-  SkullGeometry
+  PerspectiveCamera
 } from 'three'
 
 import type {
@@ -19,12 +19,11 @@ export interface MainSceneParamaters {
   viewport: Viewport
 }
 
-export class SkullScene extends Scene implements Lifecycle {
+export class ExampleScene extends Scene implements Lifecycle {
   public clock: Clock
   public camera: PerspectiveCamera
   public viewport: Viewport
-  public skullKnot: Mesh<SkullGeometry
-    , MeshStandardMaterial>
+  public torusKnot: Mesh<TorusKnotGeometry, MeshStandardMaterial>
   public light1: PointLight
   public light2: PointLight
   public light3: PointLight
@@ -40,8 +39,8 @@ export class SkullScene extends Scene implements Lifecycle {
     this.camera = camera
     this.viewport = viewport
 
-    this.skullKnot = new Mesh(
-      new SkullGeometry(1, 0.4, 200, 40, 2, 1),
+    this.torusKnot = new Mesh(
+      new TorusKnotGeometry(1, 0.4, 200, 40, 2, 1),
       new MeshStandardMaterial({
         metalness: 1,
         roughness: 0.4
@@ -58,7 +57,7 @@ export class SkullScene extends Scene implements Lifecycle {
     this.light3.position.set(0, 5, 0)
 
     this.add(
-      this.skullKnot,
+      this.torusKnot,
       this.light1,
       this.light2,
       this.light3
@@ -77,8 +76,8 @@ export class SkullScene extends Scene implements Lifecycle {
     this.light2.position.y = Math.sin(theta + this.clock.elapsed * 0.001) * 4
     this.light2.position.z = Math.cos(theta + this.clock.elapsed * 0.0005) * 2
 
-    this.skullKnot.rotation.x += 0.0002 * this.clock.delta
-    this.skullKnot.rotation.y += 0.0002 * this.clock.delta
+    this.torusKnot.rotation.x += 0.0002 * this.clock.delta
+    this.torusKnot.rotation.y += 0.0002 * this.clock.delta
   }
 
   public resize(): void {
@@ -87,7 +86,7 @@ export class SkullScene extends Scene implements Lifecycle {
   }
 
   public dispose(): void {
-    this.skullKnot.geometry.dispose()
-    this.skullKnot.material.dispose()
+    this.torusKnot.geometry.dispose()
+    this.torusKnot.material.dispose()
   }
 }
