@@ -51,6 +51,14 @@ const sectionF = document.querySelector('#f')
 //   console.log(`Scroll position: ${scrollPosition}px`);
 // });
 
+// const onClickMesh = () {
+//   const clic = true
+//   const out = false
+//   const popUp = document.querySelector('#popup')
+
+
+// }
+
 
 const intersectionObserver = new IntersectionObserver((items) => {
   for (const item of items) {
