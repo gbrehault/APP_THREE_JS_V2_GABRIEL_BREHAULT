@@ -85,12 +85,16 @@ export class SkullScene extends Scene implements Lifecycle {
     this.mesh.rotation.set(0, 1, 0.4, 'XYZ');
     this.mesh.updateMatrixWorld(true);
     this.mesh.matrix.copy(this.matrixWorld);
-    this.add(this.mesh);
     this.mesh.material.roughness = 0.15;
     this.mesh.material.metalness = 0;
+    this.mesh.material.transparent = true;
+    this.mesh.material.opacity = 0;
+    this.add(this.mesh);
 
-    const rows = 4;
-    const columns = 4;
+    console.log(this.mesh);
+
+    const rows = 10;
+    const columns = 10;
 
     this.instancedMesh = new InstancedMesh(
       this.mesh.geometry,
@@ -98,6 +102,7 @@ export class SkullScene extends Scene implements Lifecycle {
       rows * columns
     )
     this.add(this.instancedMesh);
+    this.instancedMesh.material.depthTest = false;
     this.instancedMesh.material.transparent = true;
     this.instancedMesh.material.opacity = 0;
 
@@ -106,11 +111,11 @@ export class SkullScene extends Scene implements Lifecycle {
       const row = Math.floor(i % columns) / (rows - 1); // Modulo ça permet de faire boucler la variable en zero et le modulo
 
       position.set(
-        column * 25 - 12.5,
-        row * 25 - 12.5,
+        column * 100 - 50,
+        row * 100 - 50,
         0,
       );
-      scale.setScalar(0.1);
+      scale.setScalar(0.3);
       matrix.compose(position, rotation, scale);
 
       this.instancedMesh.setMatrixAt(i, matrix);

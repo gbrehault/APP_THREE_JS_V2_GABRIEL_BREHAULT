@@ -42,6 +42,10 @@ const intersectionObserver = new IntersectionObserver((items) => {
           gsap.to(app.scene.instancedMesh!.material, {
             opacity: 0,
           });
+          gsap.to(app.scene.mesh!.material, {
+            opacity: 1,
+          });
+
         } else {
           console.log('section A invisible')
         }
@@ -68,6 +72,12 @@ const intersectionObserver = new IntersectionObserver((items) => {
             duration: 1.5,
             ease: "power2.inOut",
           })
+          gsap.to(app.scene.instancedMesh!.material, {
+            opacity: 0,
+          });
+          gsap.to(app.scene.mesh!.material, {
+            opacity: 1,
+          });
         } else {
           gsap.to('h1', {
             opacity: 0,
@@ -82,7 +92,8 @@ const intersectionObserver = new IntersectionObserver((items) => {
         if (item.isIntersecting) {
           gsap.to(app.scene.camera.position, {
             y: 30, // ou la valeur que tu veux cibler
-            duration: 1.5,
+            z: 0,
+            duration: 1,
             ease: "power2.inOut",
             onUpdate() {
               app.scene.camera.lookAt(0, 0, 0);
@@ -90,14 +101,20 @@ const intersectionObserver = new IntersectionObserver((items) => {
           });
           gsap.to(app.scene.instancedMesh!.material, {
             opacity: 1,
-            duration: 1.5,
+            duration: 1,
             y: 1,
             ease: "power2.inOut",
             onUpdate() {
-              app.scene.camera.lookAt(0, 0, 0);
+              app.scene.instancedMesh?.lookAt(app.scene.camera.position);
             }
-          })
-        } else {
+          });
+          gsap.to(app.scene.mesh!.material, {
+            opacity: 0,
+            duration: 1,
+            ease: "power2.inOut",
+          });
+        }
+        else {
           gsap.to(app.scene.instancedMesh!.material, {
             opacity: 0,
           });
@@ -106,22 +123,30 @@ const intersectionObserver = new IntersectionObserver((items) => {
       case sectionD:
         if (item.isIntersecting) {
           gsap.to(app.scene.camera.position, {
-            y: 30, // ou la valeur que tu veux cibler
-            duration: 1.5,
+            y: 10, // ou la valeur que tu veux cibler
+            z: -10,
+            duration: 1,
             ease: "power2.inOut",
             onUpdate() {
               app.scene.camera.lookAt(0, 0, 0);
             }
           });
-          gsap.to('.p1', {
+          gsap.to('.social-network', {
             opacity: 1,
             duration: 1.5,
             ease: "power2.inOut",
           })
-        } else {
-          gsap.to('.p1', {
+          gsap.to(app.scene.instancedMesh!.material, {
             opacity: 0,
-            duration: 1.5,
+          });
+          gsap.to(app.scene.mesh!.material, {
+            opacity: 1,
+            scale: 1,
+          });
+        } else {
+          gsap.to('.social-network', {
+            opacity: 0,
+            duration: 0.5,
             ease: "power2.inOut",
           })
         }
