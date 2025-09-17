@@ -1,11 +1,43 @@
 import gsap from 'gsap'
 import { App } from '~/App'
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
+import * as THREE from 'three'
+
 
 const app = await App.mount({
   debug: true,
   canvas: document.querySelector('canvas')!
 })
 document.body.classList.add('loaded')
+
+const composer = new EffectComposer(app.renderer);
+composer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+const renderPass = new RenderPass(app.scene, app.camera);
+composer.addPass(renderPass);
+
+const bloomPass = new UnrealBloomPass(
+  new THREE.Vector2(window.innerWidth, window.innerHeight), // résolution
+  0.5,  // strength (intensité)
+  1,    // radius (diffusion)
+  0.85  // threshold (seuil de luminosité)
+);
+composer.addPass(bloomPass);
+
+// Utiliser le composer dans la boucle de rendu au lieu de renderer.render(scene, camera)
+app.renderer.setAnimationLoop(() => {
+  composer.render();
+});
+
+window.addEventListener('resize', () => {
+  composer.setSize(window.innerWidth, window.innerHeight);
+  composer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  if (typeof (bloomPass as any).setSize === 'function') {
+    (bloomPass as any).setSize(window.innerWidth, window.innerHeight);
+  }
+});
 
 const sectionA = document.querySelector('#a')
 const sectionB = document.querySelector('#b')
@@ -30,13 +62,13 @@ const intersectionObserver = new IntersectionObserver((items) => {
     switch (item.target) {
       case sectionA:
         if (item.isIntersecting) {
-          gsap.to(app.scene.camera.position, {
+          gsap.to(app.camera.position, {
             x: 0, // ou la valeur que tu veux cibler
             y: 10, // ou la valeur que tu veux cibler
             duration: 1.5,
             ease: "power2.inOut",
             onUpdate() {
-              app.scene.camera.lookAt(0, 0, 0);
+              app.camera.lookAt(0, 0, 0);
             }
           });
           gsap.to(app.scene.instancedMesh!.material, {
@@ -53,14 +85,13 @@ const intersectionObserver = new IntersectionObserver((items) => {
 
       case sectionB:
         if (item.isIntersecting) {
-          gsap.to(app.scene.camera.position, {
+          gsap.to(app.camera.position, {
             x: 30, // ou la valeur que tu veux cibler
             y: 0, // ou la valeur que tu veux cibler
-
             duration: 1.5,
             ease: "power2.inOut",
             onUpdate() {
-              app.scene.camera.lookAt(0, 0, 0);
+              app.camera.lookAt(0, 0, 0);
             }
           });
           gsap.to(app.scene.instancedMesh!.material, {
@@ -90,13 +121,13 @@ const intersectionObserver = new IntersectionObserver((items) => {
 
       case sectionC:
         if (item.isIntersecting) {
-          gsap.to(app.scene.camera.position, {
+          gsap.to(app.camera.position, {
             y: 30, // ou la valeur que tu veux cibler
             z: 0,
             duration: 1,
             ease: "power2.inOut",
             onUpdate() {
-              app.scene.camera.lookAt(0, 0, 0);
+              app.camera.lookAt(0, 0, 0);
             }
           });
           gsap.to(app.scene.instancedMesh!.material, {
@@ -105,7 +136,7 @@ const intersectionObserver = new IntersectionObserver((items) => {
             y: 1,
             ease: "power2.inOut",
             onUpdate() {
-              app.scene.instancedMesh?.lookAt(app.scene.camera.position);
+              app.scene.instancedMesh?.lookAt(app.camera.position);
             }
           });
           gsap.to(app.scene.mesh!.material, {
@@ -122,13 +153,13 @@ const intersectionObserver = new IntersectionObserver((items) => {
         break;
       case sectionD:
         if (item.isIntersecting) {
-          gsap.to(app.scene.camera.position, {
+          gsap.to(app.camera.position, {
             y: 10, // ou la valeur que tu veux cibler
             z: -10,
             duration: 1,
             ease: "power2.inOut",
             onUpdate() {
-              app.scene.camera.lookAt(0, 0, 0);
+              app.camera.lookAt(0, 0, 0);
             }
           });
           gsap.to('.social-network', {
@@ -141,7 +172,6 @@ const intersectionObserver = new IntersectionObserver((items) => {
           });
           gsap.to(app.scene.mesh!.material, {
             opacity: 1,
-            scale: 1,
           });
         } else {
           gsap.to('.social-network', {
