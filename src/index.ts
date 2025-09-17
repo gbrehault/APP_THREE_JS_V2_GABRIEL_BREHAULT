@@ -1,9 +1,6 @@
 import gsap from 'gsap'
 import { App } from '~/App'
-import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
-import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
-import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
-import * as THREE from 'three'
+import { EffectComposer, RenderPass, EffectPass, BloomEffect } from 'postprocessing'
 
 
 const app = await App.mount({
@@ -13,18 +10,20 @@ const app = await App.mount({
 document.body.classList.add('loaded')
 
 const composer = new EffectComposer(app.renderer);
-composer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
 const renderPass = new RenderPass(app.scene, app.camera);
 composer.addPass(renderPass);
 
-const bloomPass = new UnrealBloomPass(
-  new THREE.Vector2(window.innerWidth, window.innerHeight), // résolution
-  0.5,  // strength (intensité)
-  1,    // radius (diffusion)
-  0.85  // threshold (seuil de luminosité)
-);
-composer.addPass(bloomPass);
+const bloomEffect = new BloomEffect({
+  intensity: 2.5,              // force du bloom
+  luminanceThreshold: 0.2,     // seuil
+  luminanceSmoothing: 0.5,     // adoucissement (approche du radius)
+  mipmapBlur: true,         // Utilise le flou avec mipmaps (plus performant/soft)
+});
+
+
+const effectPass = new EffectPass(app.camera, bloomEffect);
+composer.addPass(effectPass);
 
 // Utiliser le composer dans la boucle de rendu au lieu de renderer.render(scene, camera)
 app.renderer.setAnimationLoop(() => {
@@ -33,10 +32,6 @@ app.renderer.setAnimationLoop(() => {
 
 window.addEventListener('resize', () => {
   composer.setSize(window.innerWidth, window.innerHeight);
-  composer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  if (typeof (bloomPass as any).setSize === 'function') {
-    (bloomPass as any).setSize(window.innerWidth, window.innerHeight);
-  }
 });
 
 const sectionA = document.querySelector('#a')
@@ -194,4 +189,3 @@ if (sectionC) intersectionObserver.observe(sectionC)
 if (sectionD) intersectionObserver.observe(sectionD)
 if (sectionE) intersectionObserver.observe(sectionE)
 if (sectionF) intersectionObserver.observe(sectionF)
-
