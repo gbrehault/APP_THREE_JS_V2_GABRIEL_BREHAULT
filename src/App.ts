@@ -91,7 +91,7 @@ export class App implements Lifecycle {
     this.viewport.start()
     this.clock.start()
     this.loop.start()
-    this.controls.start()
+    // this.controls.start()
     this.gui?.start()
   }
 
@@ -109,7 +109,7 @@ export class App implements Lifecycle {
    */
   public update(): void {
     this.clock.update()
-    this.controls.update()
+    // this.controls.update()
     this.viewport.update()
     this.scene.update()
     this.composer.update()

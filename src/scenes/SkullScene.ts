@@ -2,7 +2,13 @@ import {
   Scene,
   PointLight,
   PerspectiveCamera,
-  Mesh
+  Mesh,
+  InstancedMesh,
+  Matrix4,
+  Vector3,
+  MeshStandardMaterial,
+  BufferGeometry,
+  Quaternion
 } from 'three'
 
 import { GLTF, GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
@@ -22,6 +28,11 @@ export interface MainSceneParamaters {
   camera: PerspectiveCamera
   viewport: Viewport
 }
+const matrix = new Matrix4();
+const position = new Vector3();
+const rotation = new Quaternion();
+const scale = new Vector3();
+const UP = new Vector3(0, 1, 0);
 
 export class SkullScene extends Scene implements Lifecycle {
   public clock: Clock
@@ -30,6 +41,7 @@ export class SkullScene extends Scene implements Lifecycle {
   public pointLight1: PointLight
   public skullMesh: THREE.Mesh | null = null
   public mesh?: Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>
+  public instancedMesh?: InstancedMesh<BufferGeometry, MeshStandardMaterial>
   public constructor({
     clock,
     camera,
@@ -44,13 +56,17 @@ export class SkullScene extends Scene implements Lifecycle {
     const axesHelper = new THREE.AxesHelper(5);
     this.add(axesHelper);
 
-    this.pointLight1 = new THREE.PointLight(0xffffff, 10000, 10);
-    this.pointLight1.position.set(10, 10, 10);
+    this.pointLight1 = new THREE.PointLight(0xffffff, 100000, 100);
+    this.pointLight1.position.set(0, 20, -20);
     this.add(this.pointLight1);
 
-    // Ajout du PointLightHelper
-    const pointLightHelper = new THREE.PointLightHelper(this.pointLight1, 1);
-    this.add(pointLightHelper);
+    // // Ajout du PointLightHelper
+    // const pointLightHelper = new THREE.PointLightHelper(this.pointLight1, 1);
+    // this.add(pointLightHelper);
+
+    // const cameraHelper = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    // const helper = new THREE.CameraHelper(cameraHelper);
+    // this.add(helper);
   }
 
   public async load(): Promise<void> {
@@ -70,16 +86,54 @@ export class SkullScene extends Scene implements Lifecycle {
     this.mesh.updateMatrixWorld(true);
     this.mesh.matrix.copy(this.matrixWorld);
     this.add(this.mesh);
-    this.mesh.material.roughness = 0;
+    this.mesh.material.roughness = 0.15;
     this.mesh.material.metalness = 0;
+
+    const rows = 4;
+    const columns = 4;
+
+    this.instancedMesh = new InstancedMesh(
+      this.mesh.geometry,
+      this.mesh.material.clone(),
+      rows * columns
+    )
+    this.add(this.instancedMesh);
+    this.instancedMesh.material.transparent = true;
+    this.instancedMesh.material.opacity = 0;
+
+    for (let i = 0; i < this.instancedMesh.count; i++) {
+      const column = Math.floor(i / columns) / (columns - 1); // Floor ça arrondi à l'inferrieur 
+      const row = Math.floor(i % columns) / (rows - 1); // Modulo ça permet de faire boucler la variable en zero et le modulo
+
+      position.set(
+        column * 25 - 12.5,
+        row * 25 - 12.5,
+        0,
+      );
+      scale.setScalar(0.1);
+      matrix.compose(position, rotation, scale);
+
+      this.instancedMesh.setMatrixAt(i, matrix);
+      console.log(position
+      );
+    }
+    this.instancedMesh.lookAt(this.camera.position);
 
     console.log(gltf);
   }
 
   public update(): void {
 
-  }
+    for (let i = 0; i < this.instancedMesh!.count; i++) {
+      this.instancedMesh?.getMatrixAt(i, matrix);
+      matrix.decompose(position, rotation, scale);
+      rotation.setFromAxisAngle(UP, this.clock.elapsed / 1000);
+      matrix.compose(position, rotation, scale);
+      this.instancedMesh!.setMatrixAt(i, matrix);
 
+    }
+    this.instancedMesh!.instanceMatrix.needsUpdate = true;
+  }
   public resize(): void {
     this.camera.aspect = this.viewport.ratio
     this.camera.updateProjectionMatrix()

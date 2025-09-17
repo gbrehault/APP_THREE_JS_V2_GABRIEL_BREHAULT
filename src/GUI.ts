@@ -17,7 +17,7 @@ export class GUI extends Pane implements Lifecycle {
       container: document.createElement('div'),
     })
 
-    this.hidden = true, // Permet dfe maquer le GUI par défaut
+    this.hidden = true, // Permet dfe masquer le GUI par défaut
       this.registerPlugin(EssentialsPlugin)
     this.app = app
 
