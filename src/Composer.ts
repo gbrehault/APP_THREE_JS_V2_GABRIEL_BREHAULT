@@ -8,7 +8,8 @@ import {
   EffectComposer,
   FXAAEffect,
   EffectPass,
-  RenderPass
+  RenderPass,
+  BloomEffect
 } from 'postprocessing'
 
 import type {
@@ -31,6 +32,7 @@ export class Composer extends EffectComposer implements Lifecycle {
   public renderPass: RenderPass
   public effectPass?: EffectPass
   public fxaaEffect?: FXAAEffect
+  public bloomEffect?: BloomEffect
 
   public get camera(): Camera | undefined {
     return this.renderPass.mainCamera
@@ -51,7 +53,14 @@ export class Composer extends EffectComposer implements Lifecycle {
 
   public async load(): Promise<void> {
     this.fxaaEffect = new FXAAEffect()
-    this.effectPass = new EffectPass(this.camera, this.fxaaEffect)
+    this.bloomEffect = new BloomEffect({
+      intensity: 2.5,              // force du bloom
+      luminanceThreshold: 0.2,     // seuil
+      luminanceSmoothing: 0.5,     // adoucissement (approche du radius)
+      mipmapBlur: true,         // Utilise le flou avec mipmaps (plus performant/soft)
+    });
+    this.effectPass = new EffectPass(this.camera, this.fxaaEffect, this.bloomEffect)
+
 
     this.addPass(this.renderPass)
     this.addPass(this.effectPass)

@@ -91,7 +91,6 @@ export class SkullScene extends Scene implements Lifecycle {
     this.mesh.material.opacity = 0;
     this.add(this.mesh);
 
-    console.log(this.mesh);
 
     const rows = 10;
     const columns = 10;
@@ -101,10 +100,10 @@ export class SkullScene extends Scene implements Lifecycle {
       this.mesh.material.clone(),
       rows * columns
     )
-    this.add(this.instancedMesh);
     this.instancedMesh.material.depthTest = false;
     this.instancedMesh.material.transparent = true;
     this.instancedMesh.material.opacity = 0;
+    this.add(this.instancedMesh);
 
     for (let i = 0; i < this.instancedMesh.count; i++) {
       const column = Math.floor(i / columns) / (columns - 1); // Floor ça arrondi à l'inferrieur 
@@ -119,12 +118,9 @@ export class SkullScene extends Scene implements Lifecycle {
       matrix.compose(position, rotation, scale);
 
       this.instancedMesh.setMatrixAt(i, matrix);
-      console.log(position
-      );
     }
     this.instancedMesh.lookAt(this.camera.position);
 
-    console.log(gltf);
   }
 
   public update(): void {

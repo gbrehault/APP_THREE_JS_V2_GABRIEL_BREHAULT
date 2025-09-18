@@ -52,6 +52,7 @@ export class Controls extends CameraControls implements Lifecycle {
     this.element = element
     this.minDistance = 30
     this.maxDistance = 30
+    this.mouseButtons.wheel = CameraControls.ACTION.NONE
     this.setPosition(0.3, 10.7, -22.6)
   }
 

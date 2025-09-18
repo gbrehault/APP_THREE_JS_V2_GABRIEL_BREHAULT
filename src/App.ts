@@ -4,6 +4,7 @@ import type { GUI } from '~/GUI'
 import { Composer } from '~/Composer'
 import { Controls } from '~/Controls'
 import { SkullScene } from '~/scenes/SkullScene'
+import * as THREE from 'three'
 
 export interface AppParameters {
   canvas?: HTMLCanvasElement | OffscreenCanvas
@@ -21,6 +22,8 @@ export class App implements Lifecycle {
   public viewport: Viewport
   public scene: SkullScene
   public gui?: GUI
+  public controlsEnabled?: boolean
+  public positionCamera? = new THREE.Vector3()
 
   public constructor({
     canvas,
@@ -61,8 +64,9 @@ export class App implements Lifecycle {
 
     this.controls = new Controls({
       camera: this.camera,
-      element: this.renderer.domElement,
+      element: document.body,
       clock: this.clock
+
     })
 
     this.loop = new Loop({
@@ -91,7 +95,7 @@ export class App implements Lifecycle {
     this.viewport.start()
     this.clock.start()
     this.loop.start()
-    // this.controls.start()
+    this.controls.start()
     this.gui?.start()
   }
 
@@ -99,7 +103,7 @@ export class App implements Lifecycle {
    * Stop the app rendering loop
    */
   public stop(): void {
-    // this.controls.stop()
+    this.controls.stop()
     this.viewport.stop()
     this.loop.stop()
   }
@@ -109,7 +113,13 @@ export class App implements Lifecycle {
    */
   public update(): void {
     this.clock.update()
-    // this.controls.update()
+    if (this.controlsEnabled) {
+      this.controls.update();
+    }
+    const distance = this.positionCamera!.distanceTo(this.camera.position)
+    this.positionCamera!.copy(this.camera.position)
+    const speed = distance / this.clock.delta;
+    this.composer.bloomEffect!.intensity = speed * 35
     this.viewport.update()
     this.scene.update()
     this.composer.update()
