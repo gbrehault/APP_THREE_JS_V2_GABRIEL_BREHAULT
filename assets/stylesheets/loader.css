@@ -1,5 +1,5 @@
 .loader {
-  background: #000;
+  background: #fff;
   position: fixed;
   top: 0;
   left: 0;
@@ -9,7 +9,7 @@
   align-items: center;
   justify-content: center;
   z-index: 1;
-  transition: opacity .4s .2s;
+  transition: opacity 1s .5s;
 }
 
 body.loaded .loader {

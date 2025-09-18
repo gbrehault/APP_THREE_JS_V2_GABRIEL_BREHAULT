@@ -1,6 +1,9 @@
 import gsap from 'gsap'
 import { App } from '~/App'
 import { EffectComposer, RenderPass, EffectPass, BloomEffect } from 'postprocessing'
+import { ScrollTrigger, } from "gsap/ScrollTrigger"
+
+gsap.registerPlugin(ScrollTrigger)
 
 const app = await App.mount({
   debug: true,
@@ -20,7 +23,6 @@ const bloomEffect = new BloomEffect({
   mipmapBlur: true,         // Utilise le flou avec mipmaps (plus performant/soft)
 });
 
-
 const effectPass = new EffectPass(app.camera, bloomEffect);
 composer.addPass(effectPass);
 
@@ -33,12 +35,12 @@ window.addEventListener('resize', () => {
   composer.setSize(window.innerWidth, window.innerHeight);
 });
 
+
+
 const sectionA = document.querySelector('#a')
 const sectionB = document.querySelector('#b')
 const sectionC = document.querySelector('#c')
 const sectionD = document.querySelector('#d')
-const sectionE = document.querySelector('#e')
-const sectionF = document.querySelector('#f')
 
 // const titleB = document.querySelector('#title-b')
 // const paragraphB = document.querySelector('#paragraph-b')
@@ -67,11 +69,18 @@ const intersectionObserver = new IntersectionObserver((items) => {
       case sectionA:
         if (item.isIntersecting) {
           gsap.fromTo(app.camera.position,
-            { y: 0, x: 0 }, // ou la valeur que tu veux cibler
+            { y: 10.7, x: 0.3, z: -22.6 }, // ou la valeur que tu veux cibler
             {
-              y: 10, x: 0, // ou la valeur que tu veux cibler
-              duration: 0.5,
+              y: 10, x: 0.3, z: -22.6, // ou la valeur que tu veux cibler
+              duration: 1.5,
               ease: "power2.inOut",
+              scrollTrigger: {
+                trigger: sectionA,
+                start: "top center",
+                end: "bottom center",
+                toggleActions: "play none none reverse",
+                scrub: true // ← avance/recul selon le scroll
+              },
               onUpdate() {
                 app.camera.lookAt(0, 0, 0);
               }
@@ -80,12 +89,27 @@ const intersectionObserver = new IntersectionObserver((items) => {
             { opacity: 0 },
             {
               opacity: 0,
+              overwrite: 'auto',
+              duration: 0.5,
+              scrollTrigger: {
+                trigger: sectionA,
+                start: "top center",
+                end: "bottom center",
+                toggleActions: "play none none reverse"
+              }
             });
           gsap.fromTo(app.scene.mesh!.material, {
             opacity: 1
           },
             {
               opacity: 1,
+              overwrite: 'auto',
+              scrollTrigger: {
+                trigger: sectionA,
+                start: "top center",
+                end: "bottom center",
+                toggleActions: "play none none reverse"
+              }
             });
 
           gsap.fromTo('h1',
@@ -94,8 +118,28 @@ const intersectionObserver = new IntersectionObserver((items) => {
               opacity: 0,
               duration: 0.5,
               ease: "power2.inOut",
+              scrollTrigger: {
+                trigger: sectionA,
+                start: "top center",
+                end: "bottom center",
+                toggleActions: "play none none reverse"
+              }
             }
           )
+          gsap.fromTo('.social-network', {
+            opacity: 0
+          },
+            {
+              opacity: 0,
+              duration: 1.5,
+              ease: "power2.inOut",
+              scrollTrigger: {
+                trigger: sectionA,
+                start: "top center",
+                end: "bottom center",
+                toggleActions: "play none none reverse"
+              }
+            });
         } else {
           console.log('section A invisible')
         }
@@ -104,12 +148,18 @@ const intersectionObserver = new IntersectionObserver((items) => {
       case sectionB:
         if (item.isIntersecting) {
           gsap.fromTo(app.camera.position, {
-            y: 0, x: 0
+            y: 10, x: 0.3, z: -22.6,
           }, // ou la valeur que tu veux cibler
             {
-              y: 0, x: 30, // ou la valeur que tu veux cibler
+              y: 0, x: 30, z: -22.6, // ou la valeur que tu veux cibler
               duration: 0.5,
               ease: "power2.inOut",
+              scrollTrigger: {
+                trigger: sectionB,
+                start: "top center",
+                end: "bottom center",
+                toggleActions: "play none none reverse"
+              },
               onUpdate() {
                 app.camera.lookAt(0, 0, 0);
               }
@@ -119,6 +169,12 @@ const intersectionObserver = new IntersectionObserver((items) => {
           },
             {
               opacity: 1,
+              scrollTrigger: {
+                trigger: sectionB,
+                start: "top center",
+                end: "bottom center",
+                toggleActions: "play none none reverse"
+              }
             });
           gsap.fromTo('h1', {
             opacity: 0
@@ -126,19 +182,51 @@ const intersectionObserver = new IntersectionObserver((items) => {
             {
               opacity: 1,
               top: 0,
-              duration: 1.5,
+              duration: 0.5,
               ease: "power2.inOut",
+              scrollTrigger: {
+                trigger: sectionB,
+                start: "top center",
+                end: "bottom center",
+                toggleActions: "play none none reverse"
+              }
             })
           gsap.fromTo(app.scene.instancedMesh!.material,
             { opacity: 0 },
             {
               opacity: 0,
+              scrollTrigger: {
+                trigger: sectionB,
+                start: "top center",
+                end: "bottom center",
+                toggleActions: "play none none reverse"
+              }
             });
           gsap.fromTo(app.scene.mesh!.material, {
             opacity: 0
           },
             {
               opacity: 1,
+              scrollTrigger: {
+                trigger: sectionB,
+                start: "top center",
+                end: "bottom center",
+                toggleActions: "play none none reverse"
+              }
+            });
+          gsap.fromTo('.social-network', {
+            opacity: 0
+          },
+            {
+              opacity: 0,
+              duration: 0.5,
+              ease: "power2.inOut",
+              scrollTrigger: {
+                trigger: sectionB,
+                start: "top center",
+                end: "bottom center",
+                toggleActions: "play none none reverse"
+              }
             });
         } else {
           // gsap.to('h1', {
@@ -153,13 +241,18 @@ const intersectionObserver = new IntersectionObserver((items) => {
       case sectionC:
         if (item.isIntersecting) {
           gsap.fromTo(app.camera.position, {
-            y: 0, // ou la valeur que tu veux cibler
-            z: 0
+            y: 0, x: 30, z: -22.6,
           },
             {
-              y: 30, x: 0,
-              duration: 1,
+              y: 30, x: 0, z: -22.6,
+              duration: 0.5,
               ease: "power2.inOut",
+              scrollTrigger: {
+                trigger: sectionC,
+                start: "top center",
+                end: "bottom center",
+                toggleActions: "play none none reverse"
+              },
               onUpdate() {
                 app.camera.lookAt(0, 0, 0);
               }
@@ -169,10 +262,16 @@ const intersectionObserver = new IntersectionObserver((items) => {
           },
             {
               opacity: 1,
-              duration: 1,
+              duration: 0.5,
               top: 0,
               y: 1,
               ease: "power2.inOut",
+              scrollTrigger: {
+                trigger: sectionC,
+                start: "top center",
+                end: "bottom center",
+                toggleActions: "play none none reverse"
+              },
               onUpdate() {
                 app.scene.instancedMesh?.lookAt(app.camera.position);
               }
@@ -182,8 +281,14 @@ const intersectionObserver = new IntersectionObserver((items) => {
           },
             {
               opacity: 0,
-              duration: 1,
+              duration: 0.5,
               ease: "power2.inOut",
+              scrollTrigger: {
+                trigger: sectionC,
+                start: "top center",
+                end: "bottom center",
+                toggleActions: "play none none reverse"
+              },
             });
           gsap.fromTo('h1', {
             opacity: 0
@@ -193,21 +298,47 @@ const intersectionObserver = new IntersectionObserver((items) => {
               top: -20,
               duration: 0.5,
               ease: "power2.inOut",
+              scrollTrigger: {
+                trigger: sectionC,
+                start: "top center",
+                end: "bottom center",
+                toggleActions: "play none none reverse"
+              },
             })
+          gsap.fromTo('.social-network', {
+            opacity: 0
+          },
+            {
+              opacity: 0,
+              duration: 0.5,
+              ease: "power2.inOut",
+              scrollTrigger: {
+                trigger: sectionC,
+                start: "top center",
+                end: "bottom center",
+                toggleActions: "play none none reverse"
+              },
+            });
         }
+
         else {
         }
         break;
       case sectionD:
         if (item.isIntersecting) {
           gsap.fromTo(app.camera.position, {
-            y: 0, // ou la valeur que tu veux cibler
-            z: -0
+            y: 30, x: 0, z: -22.6,
           },
             {
-              y: 10, z: -10,
-              duration: 1,
+              y: 10, x: 30, z: -10,
+              duration: 0.5,
               ease: "power2.inOut",
+              scrollTrigger: {
+                trigger: sectionD,
+                start: "top center",
+                end: "bottom center",
+                toggleActions: "play none none reverse"
+              },
               onUpdate() {
                 app.camera.lookAt(0, 0, 0);
               }
@@ -217,20 +348,38 @@ const intersectionObserver = new IntersectionObserver((items) => {
           },
             {
               opacity: 1,
-              duration: 1.5,
+              duration: 0.5,
               ease: "power2.inOut",
-            })
+              scrollTrigger: {
+                trigger: sectionD,
+                start: "top center",
+                end: "bottom center",
+                toggleActions: "play none none reverse"
+              },
+            });
           gsap.fromTo(app.scene.instancedMesh!.material, {
             opacity: 0
           },
             {
               opacity: 0,
+              scrollTrigger: {
+                trigger: sectionD,
+                start: "top center",
+                end: "bottom center",
+                toggleActions: "play none none reverse"
+              },
             });
           gsap.fromTo(app.scene.mesh!.material, {
             opacity: 1
           },
             {
               opacity: 1,
+              scrollTrigger: {
+                trigger: sectionD,
+                start: "top center",
+                end: "bottom center",
+                toggleActions: "play none none reverse"
+              },
             });
         } else {
         }
@@ -249,5 +398,3 @@ if (sectionA) intersectionObserver.observe(sectionA)
 if (sectionB) intersectionObserver.observe(sectionB)
 if (sectionC) intersectionObserver.observe(sectionC)
 if (sectionD) intersectionObserver.observe(sectionD)
-if (sectionE) intersectionObserver.observe(sectionE)
-if (sectionF) intersectionObserver.observe(sectionF)

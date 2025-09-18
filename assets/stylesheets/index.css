@@ -5,6 +5,10 @@ html, body {
   height: 100%;
 }
 
+canvas {
+  scroll-behavior: smooth;
+}
+
 body {
   background: #000;
   margin: 0;
@@ -99,14 +103,4 @@ border-color: white;
     width: 2rem;
     height: auto;
     color: white;
-}
-
-#popup {
-width: 45vw;
-height: 30vh;
-background-color: white;
-color: black;
-font-family: 'Poppins' sans-serif;
-font-weight: 700;
-font-size: 2rem;
 }
