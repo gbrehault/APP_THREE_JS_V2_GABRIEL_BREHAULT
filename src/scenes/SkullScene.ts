@@ -53,8 +53,8 @@ export class SkullScene extends Scene implements Lifecycle {
     this.camera = camera
     this.viewport = viewport
 
-    const axesHelper = new THREE.AxesHelper(5);
-    this.add(axesHelper);
+    // const axesHelper = new THREE.AxesHelper(5);
+    // this.add(axesHelper);
 
     this.pointLight1 = new THREE.PointLight(0xffffff, 100000, 100);
     this.pointLight1.position.set(0, 20, -20);

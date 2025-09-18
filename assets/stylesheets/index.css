@@ -18,8 +18,9 @@ canvas {
   left: 0;
   object-fit: cover;
   position: fixed;
-
+  z-index: 9999;
 }
+
 #a, #b, #c , #d{
   height: 100vh; /* Chaque section occupe la hauteur de la fenêtre */
   width: 100%; /* Occupe toute la largeur */
@@ -100,3 +101,12 @@ border-color: white;
     color: white;
 }
 
+#popup {
+width: 45vw;
+height: 30vh;
+background-color: white;
+color: black;
+font-family: 'Poppins' sans-serif;
+font-weight: 700;
+font-size: 2rem;
+}
