@@ -12,9 +12,9 @@ import {
 } from 'three'
 
 import { GLTF, GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { UltraHDRLoader } from 'three/examples/jsm/Addons.js';
 import SkullGLb from '~~/assets/models/skull.glb'
-import EnveMap from '~~/assets/textures/envmap_skull_gardient.hdr'
-import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';;
+import EnveMap from '~~/assets/textures/envmap_skull_gardient.jpg'
 import * as THREE from 'three';
 
 import type {
@@ -70,10 +70,10 @@ export class SkullScene extends Scene implements Lifecycle {
   }
 
   public async load(): Promise<void> {
-    const hdrLoader = new RGBELoader();
+    const hdrLoader = new UltraHDRLoader();
     hdrLoader.load(EnveMap, (texture) => {
       texture.mapping = THREE.EquirectangularReflectionMapping;
-      this.environment = texture; // Pour les réflexions
+      this.environment = texture;
     });
     const gltf = await new Promise<GLTF>((resolve, reject) => {
       new GLTFLoader().load(SkullGLb, resolve, undefined, reject)
