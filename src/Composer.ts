@@ -54,7 +54,7 @@ export class Composer extends EffectComposer implements Lifecycle {
   public async load(): Promise<void> {
     this.fxaaEffect = new FXAAEffect()
     this.bloomEffect = new BloomEffect({
-      intensity: 2.5,              // force du bloom
+      intensity: 3.5,              // force du bloom
       luminanceThreshold: 0.2,     // seuil
       luminanceSmoothing: 0.5,     // adoucissement (approche du radius)
       mipmapBlur: true,         // Utilise le flou avec mipmaps (plus performant/soft)

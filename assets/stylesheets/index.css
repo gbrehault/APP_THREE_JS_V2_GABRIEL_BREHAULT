@@ -3,10 +3,7 @@
 html, body {
   width: 100%;
   height: 100%;
-}
 
-canvas {
-  scroll-behavior: smooth;
 }
 
 body {
@@ -25,8 +22,8 @@ canvas {
   z-index: 0;
 }
 
-#a, #b, #c , #d{
-  height: 100vh; /* Chaque section occupe la hauteur de la fenêtre */
+#a, #b, #c , #d, #b1, #b2, #b3 { 
+  height: 60vh; /* Chaque section occupe la hauteur de la fenêtre */
   width: 100%; /* Occupe toute la largeur */
   z-index: 9999;
   position: relative;
@@ -45,14 +42,15 @@ p {
 
 h3 {
   position: fixed;
-  bottom: 100px;
+  bottom: -10px;
   opacity: 0;
   color: white;
-  font-family: "Montserrat", sans-serif;
+  font-family: "Poppins", sans-serif;
   font-size: 1.5rem;
+  font-weight: 300;
 }
 
-h1 {
+.h1, .h1-1, .h1-2, .h1-3 {
     font-family: "Poppins", sans-serif;
     text-transform: uppercase;
     font-weight: 700;

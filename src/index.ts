@@ -12,6 +12,9 @@ document.body.classList.add('loaded')
 
 const sectionA = document.querySelector('#a')
 const sectionB = document.querySelector('#b')
+const sectionB1 = document.querySelector('#b1')
+const sectionB2 = document.querySelector('#b2')
+const sectionB3 = document.querySelector('#b3')
 const sectionC = document.querySelector('#c')
 const sectionD = document.querySelector('#d')
 
@@ -125,7 +128,7 @@ const intersectionObserver = new IntersectionObserver((items) => {
             opacity: 0
           },
             {
-              opacity: 1,
+              opacity: 0,
               scrollTrigger: {
                 trigger: sectionB,
                 start: "top center",
@@ -134,7 +137,7 @@ const intersectionObserver = new IntersectionObserver((items) => {
                 toggleActions: "play none none reverse"
               }
             });
-          gsap.fromTo('h1', {
+          gsap.fromTo('.h1', {
             opacity: 0
           },
             {
@@ -147,17 +150,6 @@ const intersectionObserver = new IntersectionObserver((items) => {
                 start: "top center",
                 end: "bottom center",
                 once: true,                // ✅ joue une seule fois
-                toggleActions: "play none none reverse"
-              }
-            })
-          gsap.fromTo(app.scene.instancedMesh!.material,
-            { opacity: 0 },
-            {
-              opacity: 0,
-              scrollTrigger: {
-                trigger: sectionB,
-                start: "top center",
-                end: "bottom center",
                 toggleActions: "play none none reverse"
               }
             });
@@ -195,6 +187,300 @@ const intersectionObserver = new IntersectionObserver((items) => {
           //   duration: 0.5,
           //   ease: "power2.inOut",
           // })
+        }
+        break;
+      case sectionB1:
+        if (item.isIntersecting) {
+          app.controlsEnabled = false;
+          gsap.fromTo(app.camera.position, {
+            y: 0, x: 30, z: -22.6,
+          }, // ou la valeur que tu veux cibler
+            {
+              y: 10, x: -30, z: 1, // ou la valeur que tu veux cibler
+              duration: 0.5,
+              ease: "ease-out",
+              scrollTrigger: {
+                trigger: sectionB1,
+                start: "top center",
+                end: "bottom center",
+                once: true,                // ✅ joue une seule fois
+                toggleActions: "play none none reverse"
+              },
+              onComplete() {
+                app.controls.setPosition(0, 30, -22.6);
+                app.controlsEnabled = false;
+              },
+              onUpdate() {
+                app.camera.lookAt(0, 0, 0);
+              }
+            });
+          gsap.fromTo('.h1-1', {
+            opacity: 0
+          },
+            {
+              opacity: 1,
+              top: 0,
+              duration: 0.5,
+              ease: "ease-out",
+              scrollTrigger: {
+                trigger: sectionB1,
+                start: "top center",
+                end: "bottom center",
+                once: true,                // ✅ joue une seule fois
+                toggleActions: "play none none reverse"
+              }
+            });
+          gsap.fromTo('.h1', {
+            opacity: 1
+          },
+            {
+              opacity: 0,
+              top: 0,
+              duration: 0.5,
+              ease: "ease-out",
+              scrollTrigger: {
+                trigger: sectionB1,
+                start: "top center",
+                end: "bottom center",
+                once: true,                // ✅ joue une seule fois
+                toggleActions: "play none none reverse"
+              }
+            });
+          gsap.fromTo(app.scene.instancedMesh!.material,
+            { opacity: 0 },
+            {
+              opacity: 0,
+              scrollTrigger: {
+                trigger: sectionB1,
+                start: "top center",
+                end: "bottom center",
+                toggleActions: "play none none reverse"
+              }
+            });
+          gsap.fromTo(app.scene.mesh!.material, {
+            opacity: 0
+          },
+            {
+              opacity: 1,
+              scrollTrigger: {
+                trigger: sectionB1,
+                start: "top center",
+                end: "bottom center",
+                once: true,                // ✅ joue une seule fois
+                toggleActions: "play none none reverse"
+              }
+            });
+          gsap.fromTo('.social-network', {
+            opacity: 0
+          },
+            {
+              opacity: 0,
+              duration: 0.5,
+              ease: "ease-out",
+              scrollTrigger: {
+                trigger: sectionB1,
+                start: "top center",
+                end: "bottom center",
+                toggleActions: "play none none reverse"
+              }
+            });
+        } else {
+        }
+        break;
+      case sectionB2:
+        if (item.isIntersecting) {
+          app.controlsEnabled = false;
+          gsap.fromTo(app.camera.position, {
+            y: 10, x: -30, z: 1,
+          }, // ou la valeur que tu veux cibler
+            {
+              y: 30, x: 10, z: -20, // ou la valeur que tu veux cibler
+              duration: 0.5,
+              ease: "ease-out",
+              scrollTrigger: {
+                trigger: sectionB2,
+                start: "top center",
+                end: "bottom center",
+                once: true,                // ✅ joue une seule fois
+                toggleActions: "play none none reverse"
+              },
+              onComplete() {
+                app.controls.setPosition(0, 30, -22.6);
+                app.controlsEnabled = false;
+              },
+              onUpdate() {
+                app.camera.lookAt(0, 0, 0);
+              }
+            });
+          gsap.fromTo('.h1-2', {
+            opacity: 0
+          },
+            {
+              opacity: 1,
+              top: 0,
+              duration: 0.5,
+              ease: "ease-out",
+              scrollTrigger: {
+                trigger: sectionB2,
+                start: "top center",
+                end: "bottom center",
+                once: true,                // ✅ joue une seule fois
+                toggleActions: "play none none reverse"
+              }
+            });
+          gsap.fromTo('.h1-1', {
+            opacity: 1
+          },
+            {
+              opacity: 0,
+              top: 0,
+              duration: 0.5,
+              ease: "ease-out",
+              scrollTrigger: {
+                trigger: sectionB2,
+                start: "top center",
+                end: "bottom center",
+                once: true,                // ✅ joue une seule fois
+                toggleActions: "play none none reverse"
+              }
+            });
+          gsap.fromTo(app.scene.instancedMesh!.material,
+            { opacity: 0 },
+            {
+              opacity: 0,
+              scrollTrigger: {
+                trigger: sectionB2,
+                start: "top center",
+                end: "bottom center",
+                toggleActions: "play none none reverse"
+              }
+            });
+          gsap.fromTo(app.scene.mesh!.material, {
+            opacity: 0
+          },
+            {
+              opacity: 1,
+              scrollTrigger: {
+                trigger: sectionB1,
+                start: "top center",
+                end: "bottom center",
+                once: true,                // ✅ joue une seule fois
+                toggleActions: "play none none reverse"
+              }
+            });
+          gsap.fromTo('.social-network', {
+            opacity: 0
+          },
+            {
+              opacity: 0,
+              duration: 0.5,
+              ease: "ease-out",
+              scrollTrigger: {
+                trigger: sectionB2,
+                start: "top center",
+                end: "bottom center",
+                toggleActions: "play none none reverse"
+              }
+            });
+        } else {
+        }
+        break;
+      case sectionB3:
+        if (item.isIntersecting) {
+          app.controlsEnabled = false;
+          gsap.fromTo(app.camera.position, {
+            y: 30, x: 10, z: -20,
+          }, // ou la valeur que tu veux cibler
+            {
+              y: 10, x: 5, z: -20, // ou la valeur que tu veux cibler
+              duration: 0.5,
+              ease: "ease-out",
+              scrollTrigger: {
+                trigger: sectionB3,
+                start: "top center",
+                end: "bottom center",
+                once: true,                // ✅ joue une seule fois
+                toggleActions: "play none none reverse"
+              },
+              onComplete() {
+                app.controls.setPosition(0, 30, -22.6);
+                app.controlsEnabled = false;
+              },
+              onUpdate() {
+                app.camera.lookAt(0, 0, 0);
+              }
+            });
+          gsap.fromTo('.h1-3', {
+            opacity: 0
+          },
+            {
+              opacity: 1,
+              top: 0,
+              duration: 0.5,
+              ease: "ease-out",
+              scrollTrigger: {
+                trigger: sectionB3,
+                start: "top center",
+                end: "bottom center",
+                once: true,                // ✅ joue une seule fois
+                toggleActions: "play none none reverse"
+              }
+            });
+          gsap.fromTo('.h1-2', {
+            opacity: 1
+          },
+            {
+              opacity: 0,
+              top: 0,
+              duration: 0.5,
+              ease: "ease-out",
+              scrollTrigger: {
+                trigger: sectionB3,
+                start: "top center",
+                end: "bottom center",
+                once: true,                // ✅ joue une seule fois
+                toggleActions: "play none none reverse"
+              }
+            });
+          gsap.fromTo(app.scene.instancedMesh!.material,
+            { opacity: 0 },
+            {
+              opacity: 0,
+              scrollTrigger: {
+                trigger: sectionB3,
+                start: "top center",
+                end: "bottom center",
+                toggleActions: "play none none reverse"
+              }
+            });
+          gsap.fromTo(app.scene.mesh!.material, {
+            opacity: 0
+          },
+            {
+              opacity: 1,
+              scrollTrigger: {
+                trigger: sectionB1,
+                start: "top center",
+                end: "bottom center",
+                once: true,                // ✅ joue une seule fois
+                toggleActions: "play none none reverse"
+              }
+            });
+          gsap.fromTo('.social-network', {
+            opacity: 0
+          },
+            {
+              opacity: 0,
+              duration: 0.5,
+              ease: "ease-out",
+              scrollTrigger: {
+                trigger: sectionB3,
+                start: "top center",
+                end: "bottom center",
+                toggleActions: "play none none reverse"
+              }
+            });
+        } else {
         }
         break;
 
@@ -257,7 +543,7 @@ const intersectionObserver = new IntersectionObserver((items) => {
                 toggleActions: "play none none reverse"
               },
             });
-          gsap.fromTo('h1', {
+          gsap.fromTo('.h1-3', {
             opacity: 0
           },
             {
@@ -360,6 +646,21 @@ const intersectionObserver = new IntersectionObserver((items) => {
                 toggleActions: "play none none reverse"
               },
             });
+          gsap.fromTo('h3', {
+            opacity: 0
+          },
+            {
+              opacity: 1,
+              duration: 0.5,
+              ease: "ease-out",
+              scrollTrigger: {
+                trigger: sectionD,
+                start: "top center",
+                end: "bottom center",
+                once: true,                // ✅ joue une seule fois
+                toggleActions: "play none none reverse"
+              },
+            });
         } else {
         }
         break;
@@ -375,5 +676,8 @@ const intersectionObserver = new IntersectionObserver((items) => {
 
 if (sectionA) intersectionObserver.observe(sectionA)
 if (sectionB) intersectionObserver.observe(sectionB)
+if (sectionB1) intersectionObserver.observe(sectionB1)
+if (sectionB2) intersectionObserver.observe(sectionB2)
+if (sectionB3) intersectionObserver.observe(sectionB3)
 if (sectionC) intersectionObserver.observe(sectionC)
 if (sectionD) intersectionObserver.observe(sectionD)
