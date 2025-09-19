@@ -64,7 +64,7 @@ export class App implements Lifecycle {
 
     this.controls = new Controls({
       camera: this.camera,
-      element: document.body,
+      element: document.querySelector('main')!,
       clock: this.clock
 
     })

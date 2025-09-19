@@ -18,6 +18,15 @@ canvas {
   top: 0;
   left: 0;
   object-fit: cover;
+  position: ablsolute;
+  z-index: 0;
+}
+
+main { 
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
   position: fixed;
   z-index: 0;
 }

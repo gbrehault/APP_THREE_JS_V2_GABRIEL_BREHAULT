@@ -4,14 +4,6 @@ import { ScrollTrigger, } from "gsap/ScrollTrigger"
 
 gsap.registerPlugin(ScrollTrigger)
 
-// --- [Mobile + A11Y] additions ---
-const isMobile = window.matchMedia('(pointer: coarse), (max-width: 768px)').matches;
-const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-if (prefersReduced) {
-  // Réduit fortement les animations si l’utilisateur demande moins de mouvement
-  gsap.defaults({ duration: 0, ease: 'none' });
-}
-
 const app = await App.mount({
   debug: true,
   canvas: document.querySelector('canvas')!
@@ -35,7 +27,7 @@ const intersectionObserver = new IntersectionObserver((items) => {
             { y: 10.7, x: 0.3, z: -22.6 }, // ou la valeur que tu veux cibler
             {
               y: 10, x: 0.3, z: -22.6, // ou la valeur que tu veux cibler
-              duration: isMobile ? 0.6 : 1,
+              duration: 1,
               ease: "ease-out",
               onComplete() {
                 app.controls.setPosition(10, 0.3, -22.6);
@@ -50,7 +42,7 @@ const intersectionObserver = new IntersectionObserver((items) => {
             {
               opacity: 0,
               overwrite: 'auto',
-              duration: isMobile ? 0.35 : 0.5,
+              duration: 0.5,
               ease: "ease-out",
               scrollTrigger: {
                 trigger: sectionA,
@@ -66,7 +58,6 @@ const intersectionObserver = new IntersectionObserver((items) => {
               opacity: 1,
               overwrite: 'auto',
               ease: "ease-out",
-              duration: isMobile ? 0.35 : 0.5,
               scrollTrigger: {
                 trigger: sectionA,
                 start: "top center",
@@ -79,7 +70,7 @@ const intersectionObserver = new IntersectionObserver((items) => {
             { opacity: 0 },
             {
               opacity: 0,
-              duration: isMobile ? 0.35 : 0.5,
+              duration: 0.5,
               ease: "power2.inOut",
               scrollTrigger: {
                 trigger: sectionA,
@@ -94,7 +85,7 @@ const intersectionObserver = new IntersectionObserver((items) => {
           },
             {
               opacity: 0,
-              duration: isMobile ? 0.9 : 1.5,
+              duration: 1.5,
               ease: "power2.inOut",
               scrollTrigger: {
                 trigger: sectionA,
@@ -116,7 +107,7 @@ const intersectionObserver = new IntersectionObserver((items) => {
           }, // ou la valeur que tu veux cibler
             {
               y: 0, x: 30, z: -22.6, // ou la valeur que tu veux cibler
-              duration: isMobile ? 0.35 : 0.5,
+              duration: 0.5,
               ease: "ease-out",
               scrollTrigger: {
                 trigger: sectionB,
@@ -138,7 +129,6 @@ const intersectionObserver = new IntersectionObserver((items) => {
           },
             {
               opacity: 0,
-              duration: isMobile ? 0.35 : 0.5,
               scrollTrigger: {
                 trigger: sectionB,
                 start: "top center",
@@ -153,7 +143,7 @@ const intersectionObserver = new IntersectionObserver((items) => {
             {
               opacity: 1,
               top: 0,
-              duration: isMobile ? 0.35 : 0.5,
+              duration: 0.5,
               ease: "ease-out",
               scrollTrigger: {
                 trigger: sectionB,
@@ -168,7 +158,6 @@ const intersectionObserver = new IntersectionObserver((items) => {
           },
             {
               opacity: 1,
-              duration: isMobile ? 0.35 : 0.5,
               scrollTrigger: {
                 trigger: sectionB,
                 start: "top center",
@@ -182,7 +171,7 @@ const intersectionObserver = new IntersectionObserver((items) => {
           },
             {
               opacity: 0,
-              duration: isMobile ? 0.35 : 0.5,
+              duration: 0.5,
               ease: "ease-out",
               scrollTrigger: {
                 trigger: sectionB,
@@ -208,7 +197,7 @@ const intersectionObserver = new IntersectionObserver((items) => {
           }, // ou la valeur que tu veux cibler
             {
               y: 10, x: -30, z: 1, // ou la valeur que tu veux cibler
-              duration: isMobile ? 0.35 : 0.5,
+              duration: 0.5,
               ease: "ease-out",
               scrollTrigger: {
                 trigger: sectionB1,
@@ -231,7 +220,7 @@ const intersectionObserver = new IntersectionObserver((items) => {
             {
               opacity: 1,
               top: 0,
-              duration: isMobile ? 0.35 : 0.5,
+              duration: 0.5,
               ease: "ease-out",
               scrollTrigger: {
                 trigger: sectionB1,
@@ -247,7 +236,7 @@ const intersectionObserver = new IntersectionObserver((items) => {
             {
               opacity: 0,
               top: 0,
-              duration: isMobile ? 0.35 : 0.5,
+              duration: 0.5,
               ease: "ease-out",
               scrollTrigger: {
                 trigger: sectionB1,
@@ -261,7 +250,6 @@ const intersectionObserver = new IntersectionObserver((items) => {
             { opacity: 0 },
             {
               opacity: 0,
-              duration: isMobile ? 0.35 : 0.5,
               scrollTrigger: {
                 trigger: sectionB1,
                 start: "top center",
@@ -274,7 +262,6 @@ const intersectionObserver = new IntersectionObserver((items) => {
           },
             {
               opacity: 1,
-              duration: isMobile ? 0.35 : 0.5,
               scrollTrigger: {
                 trigger: sectionB1,
                 start: "top center",
@@ -288,7 +275,7 @@ const intersectionObserver = new IntersectionObserver((items) => {
           },
             {
               opacity: 0,
-              duration: isMobile ? 0.35 : 0.5,
+              duration: 0.5,
               ease: "ease-out",
               scrollTrigger: {
                 trigger: sectionB1,
@@ -308,7 +295,7 @@ const intersectionObserver = new IntersectionObserver((items) => {
           }, // ou la valeur que tu veux cibler
             {
               y: 30, x: 10, z: -20, // ou la valeur que tu veux cibler
-              duration: isMobile ? 0.35 : 0.5,
+              duration: 0.5,
               ease: "ease-out",
               scrollTrigger: {
                 trigger: sectionB2,
@@ -331,7 +318,7 @@ const intersectionObserver = new IntersectionObserver((items) => {
             {
               opacity: 1,
               top: 0,
-              duration: isMobile ? 0.35 : 0.5,
+              duration: 0.5,
               ease: "ease-out",
               scrollTrigger: {
                 trigger: sectionB2,
@@ -347,7 +334,7 @@ const intersectionObserver = new IntersectionObserver((items) => {
             {
               opacity: 0,
               top: 0,
-              duration: isMobile ? 0.35 : 0.5,
+              duration: 0.5,
               ease: "ease-out",
               scrollTrigger: {
                 trigger: sectionB2,
@@ -361,7 +348,6 @@ const intersectionObserver = new IntersectionObserver((items) => {
             { opacity: 0 },
             {
               opacity: 0,
-              duration: isMobile ? 0.35 : 0.5,
               scrollTrigger: {
                 trigger: sectionB2,
                 start: "top center",
@@ -374,9 +360,8 @@ const intersectionObserver = new IntersectionObserver((items) => {
           },
             {
               opacity: 1,
-              duration: isMobile ? 0.35 : 0.5,
               scrollTrigger: {
-                trigger: sectionB2, // ✅ corrigé (avant: sectionB1)
+                trigger: sectionB1,
                 start: "top center",
                 end: "bottom center",
                 once: true,                // ✅ joue une seule fois
@@ -388,7 +373,7 @@ const intersectionObserver = new IntersectionObserver((items) => {
           },
             {
               opacity: 0,
-              duration: isMobile ? 0.35 : 0.5,
+              duration: 0.5,
               ease: "ease-out",
               scrollTrigger: {
                 trigger: sectionB2,
@@ -408,7 +393,7 @@ const intersectionObserver = new IntersectionObserver((items) => {
           }, // ou la valeur que tu veux cibler
             {
               y: 10, x: 5, z: -20, // ou la valeur que tu veux cibler
-              duration: isMobile ? 0.35 : 0.5,
+              duration: 0.5,
               ease: "ease-out",
               scrollTrigger: {
                 trigger: sectionB3,
@@ -431,7 +416,7 @@ const intersectionObserver = new IntersectionObserver((items) => {
             {
               opacity: 1,
               top: 0,
-              duration: isMobile ? 0.35 : 0.5,
+              duration: 0.5,
               ease: "ease-out",
               scrollTrigger: {
                 trigger: sectionB3,
@@ -447,7 +432,7 @@ const intersectionObserver = new IntersectionObserver((items) => {
             {
               opacity: 0,
               top: 0,
-              duration: isMobile ? 0.35 : 0.5,
+              duration: 0.5,
               ease: "ease-out",
               scrollTrigger: {
                 trigger: sectionB3,
@@ -461,7 +446,6 @@ const intersectionObserver = new IntersectionObserver((items) => {
             { opacity: 0 },
             {
               opacity: 0,
-              duration: isMobile ? 0.35 : 0.5,
               scrollTrigger: {
                 trigger: sectionB3,
                 start: "top center",
@@ -474,9 +458,8 @@ const intersectionObserver = new IntersectionObserver((items) => {
           },
             {
               opacity: 1,
-              duration: isMobile ? 0.35 : 0.5,
               scrollTrigger: {
-                trigger: sectionB3, // ✅ corrigé (avant: sectionB1)
+                trigger: sectionB1,
                 start: "top center",
                 end: "bottom center",
                 once: true,                // ✅ joue une seule fois
@@ -488,7 +471,7 @@ const intersectionObserver = new IntersectionObserver((items) => {
           },
             {
               opacity: 0,
-              duration: isMobile ? 0.35 : 0.5,
+              duration: 0.5,
               ease: "ease-out",
               scrollTrigger: {
                 trigger: sectionB3,
@@ -509,7 +492,7 @@ const intersectionObserver = new IntersectionObserver((items) => {
           },
             {
               y: 30, x: 0, z: -22.6,
-              duration: isMobile ? 0.35 : 0.5,
+              duration: 0.5,
               ease: "ease-out",
               scrollTrigger: {
                 trigger: sectionC,
@@ -530,7 +513,7 @@ const intersectionObserver = new IntersectionObserver((items) => {
           },
             {
               opacity: 1,
-              duration: isMobile ? 0.35 : 0.5,
+              duration: 0.5,
               top: 0,
               y: 1,
               ease: "ease-out",
@@ -550,7 +533,7 @@ const intersectionObserver = new IntersectionObserver((items) => {
           },
             {
               opacity: 0,
-              duration: isMobile ? 0.35 : 0.5,
+              duration: 0.5,
               ease: "ease-out",
               scrollTrigger: {
                 trigger: sectionC,
@@ -566,7 +549,7 @@ const intersectionObserver = new IntersectionObserver((items) => {
             {
               opacity: 0,
               top: -20,
-              duration: isMobile ? 0.35 : 0.5,
+              duration: 0.5,
               ease: "ease-out",
               scrollTrigger: {
                 trigger: sectionC,
@@ -581,7 +564,7 @@ const intersectionObserver = new IntersectionObserver((items) => {
           },
             {
               opacity: 0,
-              duration: isMobile ? 0.35 : 0.5,
+              duration: 0.5,
               ease: "ease-out",
               scrollTrigger: {
                 trigger: sectionC,
@@ -604,7 +587,7 @@ const intersectionObserver = new IntersectionObserver((items) => {
           },
             {
               y: 10, x: 50, z: -10,
-              duration: isMobile ? 0.35 : 0.5,
+              duration: 0.5,
               ease: "ease-out",
               scrollTrigger: {
                 trigger: sectionD,
@@ -615,8 +598,7 @@ const intersectionObserver = new IntersectionObserver((items) => {
               },
               onComplete() {
                 app.controlsEnabled = true;
-                // ❌ this.camera.setPosition -> contexte incorrect
-                app.camera.position.set(10, 50, 0); // ✅ correct
+                this.camera.setPosition(10, 50, 0);
                 app.controls.setPosition(10, 50, 0);
               },
               onUpdate() {
@@ -629,7 +611,7 @@ const intersectionObserver = new IntersectionObserver((items) => {
           },
             {
               opacity: 1,
-              duration: isMobile ? 0.35 : 0.5,
+              duration: 0.5,
               ease: "ease-out",
               scrollTrigger: {
                 trigger: sectionD,
@@ -644,7 +626,6 @@ const intersectionObserver = new IntersectionObserver((items) => {
           },
             {
               opacity: 0,
-              duration: isMobile ? 0.35 : 0.5,
               scrollTrigger: {
                 trigger: sectionD,
                 start: "top center",
@@ -657,7 +638,6 @@ const intersectionObserver = new IntersectionObserver((items) => {
           },
             {
               opacity: 1,
-              duration: isMobile ? 0.35 : 0.5,
               scrollTrigger: {
                 trigger: sectionD,
                 start: "top center",
@@ -671,7 +651,7 @@ const intersectionObserver = new IntersectionObserver((items) => {
           },
             {
               opacity: 1,
-              duration: isMobile ? 0.35 : 0.5,
+              duration: 0.5,
               ease: "ease-out",
               scrollTrigger: {
                 trigger: sectionD,
@@ -687,9 +667,12 @@ const intersectionObserver = new IntersectionObserver((items) => {
     }
   }
 }, {
-  threshold: isMobile ? 0.3 : 0.6,
-  rootMargin: isMobile ? '-10% 0px -10% 0px' : '-20% 0px -20% 0px',
+  threshold: 0.6,
+  rootMargin: '-20% 0px -20% 0px',
 });
+
+
+
 
 if (sectionA) intersectionObserver.observe(sectionA)
 if (sectionB) intersectionObserver.observe(sectionB)
